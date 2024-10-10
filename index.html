@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vue Axios Fetch Data with Secret</title>
+  <title>Vue Axios Fetch Data with Netlify Secret</title>
   <style>
     /* Add space and styling */
     #app {
@@ -44,14 +44,14 @@
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
   <script>
-    // In a real Codespaces environment, you would fetch the secret like this:
-    const API_URL = process.env.API_URL; // Fallback for local
+    // Use the environment variable for API URL (Netlify will inject this during the build)
+    const API_URL = process.env.VUE_APP_API_URL || 'https://jsonplaceholder.typicode.com/posts'; // Fallback
 
     const Home = {
       template: `
         <div>
           <h2>Home Page</h2>
-          <button @click="getData">Fetch Data from Secret API URL</button>
+          <button @click="getData">Fetch Data from API</button>
           <div v-if="data" class="data-container">
             <h3>Data from API:</h3>
             <pre>{{ data }}</pre>
@@ -66,7 +66,7 @@
       methods: {
         getData() {
           axios
-            .get(API_URL) // Using the secret API URL
+            .get(API_URL) // Using the Netlify environment variable
             .then(response => {
               this.data = response.data;
             })
