@@ -67,10 +67,10 @@
         };
       },
       methods: {
-          const API_URL = process.env.VUE_APP_API_URL;
+          
         getData() {
           axios
-            .get(API_URL) // Replace with your API
+            .get('https://jsonplaceholder.typicode.com/posts') // Replace with your API
             .then(response => {
               this.data = response.data;
             })
