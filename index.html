@@ -3,15 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vue Axios Fetch Data</title>
+  <title>Vue Axios Fetch Data with Secret</title>
   <style>
-    /* Add some space around the container */
+    /* Add space and styling */
     #app {
       margin: 20px;
       font-family: Arial, sans-serif;
     }
-    
-    /* Style the button and data container */
     button {
       padding: 10px 20px;
       background-color: #42b983;
@@ -20,11 +18,9 @@
       border-radius: 5px;
       cursor: pointer;
     }
-
     button:hover {
       background-color: #369c72;
     }
-
     .data-container {
       margin-top: 20px;
       padding: 10px;
@@ -32,10 +28,9 @@
       border-radius: 5px;
       background-color: #f9f9f9;
     }
-
     pre {
-      white-space: pre-wrap; /* Wrap the text */
-      word-wrap: break-word; /* Avoid overflow */
+      white-space: pre-wrap;
+      word-wrap: break-word;
     }
   </style>
 </head>
@@ -49,11 +44,14 @@
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
   <script>
+    // In a real Codespaces environment, you would fetch the secret like this:
+    const API_URL = process.env.API_URL; // Fallback for local
+
     const Home = {
       template: `
         <div>
           <h2>Home Page</h2>
-          <button @click="getData">Fetch Data</button>
+          <button @click="getData">Fetch Data from Secret API URL</button>
           <div v-if="data" class="data-container">
             <h3>Data from API:</h3>
             <pre>{{ data }}</pre>
@@ -68,7 +66,7 @@
       methods: {
         getData() {
           axios
-            .get('https://jsonplaceholder.typicode.com/posts') // Replace with your API
+            .get(API_URL) // Using the secret API URL
             .then(response => {
               this.data = response.data;
             })
