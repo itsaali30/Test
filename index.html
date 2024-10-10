@@ -3,13 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vue Axios Fetch Data with Netlify Secret</title>
+  <title>Vue Axios Fetch Data</title>
   <style>
-    /* Add space and styling */
+    /* Add some space around the container */
     #app {
       margin: 20px;
       font-family: Arial, sans-serif;
     }
+    
+    /* Style the button and data container */
     button {
       padding: 10px 20px;
       background-color: #42b983;
@@ -18,9 +20,11 @@
       border-radius: 5px;
       cursor: pointer;
     }
+
     button:hover {
       background-color: #369c72;
     }
+
     .data-container {
       margin-top: 20px;
       padding: 10px;
@@ -28,9 +32,10 @@
       border-radius: 5px;
       background-color: #f9f9f9;
     }
+
     pre {
-      white-space: pre-wrap;
-      word-wrap: break-word;
+      white-space: pre-wrap; /* Wrap the text */
+      word-wrap: break-word; /* Avoid overflow */
     }
   </style>
 </head>
@@ -44,14 +49,12 @@
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
   <script>
-    // Use the environment variable for API URL (Netlify will inject this during the build)
-    const API_URL = process.env.VUE_APP_API_URL || 'https://jsonplaceholder.typicode.com/posts'; // Fallback
-
+  
     const Home = {
       template: `
         <div>
           <h2>Home Page</h2>
-          <button @click="getData">Fetch Data from API</button>
+          <button @click="getData">Fetch Data</button>
           <div v-if="data" class="data-container">
             <h3>Data from API:</h3>
             <pre>{{ data }}</pre>
@@ -64,9 +67,10 @@
         };
       },
       methods: {
+          const API_URL = process.env.VUE_APP_API_URL;
         getData() {
           axios
-            .get(API_URL) // Using the Netlify environment variable
+            .get(API_URL) // Replace with your API
             .then(response => {
               this.data = response.data;
             })
