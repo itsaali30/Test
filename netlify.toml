@@ -8,6 +8,8 @@
 
 [[plugins]]
   package = "@netlify/plugin-functions-install-core"
+  [functions]
+  directory = "functions"
 
 [[redirects]]
   from = "/*"
