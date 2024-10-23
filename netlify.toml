@@ -1,2 +1,15 @@
 [build]
-  functions = "netlify/functions"
+  publish = "dist"  # The directory to publish, change to the folder where your front-end build files are generated.
+  command = "npm run build"  # Command to run your build step (can be changed to the build script you use).
+  
+[build.environment]
+  NODE_VERSION = "16"  # Set the Node.js version to use.
+  GOOGLE_APPLICATION_CREDENTIALS = "keyfile.json"  # If you need to use Google credentials, specify the path here.
+
+[[plugins]]
+  package = "@netlify/plugin-functions-install-core"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
