@@ -1,0 +1,6 @@
+{
+  "scripts": {
+    "build": "vite build",  # Change this to your front-end build command (Vite in this case).
+    "start": "node server.js"  # Command to start your backend server.
+  }
+}
