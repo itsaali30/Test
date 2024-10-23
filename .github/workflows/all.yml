@@ -1,20 +1,6 @@
-name: Node.js BigQuery Setup
-
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
-
 jobs:
   build:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [16.x]
 
     steps:
     - name: Checkout repository
@@ -23,24 +9,22 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: 16.x
 
-    - name: Install dependencies
-      run: npm install
-
-    - name: Install Google Cloud SDK
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y apt-transport-https ca-certificates gnupg
-        echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
-        sudo apt-get install -y google-cloud-sdk
-
-    - name: Authenticate with Google Cloud
+    - name: Set up Google Cloud credentials
       env:
         GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
       run: |
+        echo "${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}" > /tmp/keyfile.json
+        export GOOGLE_APPLICATION_CREDENTIALS=/tmp/keyfile.json
+
+    - name: Authenticate with Google Cloud
+      run: |
         gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS
         gcloud config set project your-project-id
+
+    - name: Install dependencies
+      run: npm install
 
     - name: Install BigQuery package
       run: npm install --save @google-cloud/bigquery
@@ -48,6 +32,3 @@ jobs:
     - name: Install CORS and Body-Parser
       run: |
         npm install cors body-parser
-
-    - name: Run Tests
-      run: npm test
